@@ -449,12 +449,14 @@ public sealed partial class MainViewModel : ObservableObject
     {
         IEnumerable<ResourceItemViewModel> items = _allResources;
 
+        // Apply category filter
         if (SelectedCategory != ResourceCategoryFilter.All)
         {
-            var category = (ResourceCategory)(int)SelectedCategory;
-            items = items.Where(resource => resource.Resource.Category == category);
+            var targetCategory = (ResourceCategory)(int)SelectedCategory;
+            items = items.Where(resource => resource.Resource.Category == targetCategory);
         }
 
+        // Apply search filter
         if (!string.IsNullOrWhiteSpace(SearchText))
         {
             string query = SearchText.Trim();
@@ -464,18 +466,22 @@ public sealed partial class MainViewModel : ObservableObject
                 resource.Language.Contains(query, StringComparison.OrdinalIgnoreCase));
         }
 
+        // Materialize the filtered results
         _filteredResources = items.ToList();
         FilteredResourceCount = _filteredResources.Count;
 
+        // Deselect if current selection no longer matches filters
         if (SelectedResource is not null && !_filteredResources.Contains(SelectedResource))
         {
             SelectedResource = null;
         }
 
+        // Notify UI of changes
         OnPropertyChanged(nameof(FilteredResources));
         OnPropertyChanged(nameof(FilterSummary));
         OnPropertyChanged(nameof(HasNoFilteredResults));
 
+        // Preload thumbnails asynchronously
         _ = PreloadFilteredThumbnailsAsync();
     }
 

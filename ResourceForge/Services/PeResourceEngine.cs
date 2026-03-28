@@ -521,26 +521,36 @@ public sealed class PeResourceEngine
             {
                 var entries = ParseIconGroupEntries(res.Data);
                 // Pick largest entry for display dimensions
-                var largest = entries.MaxBy(e => (int)e.Width * e.Height + (e.Width == 0 ? 256 * 256 : 0));
-                if (largest is not null)
+                if (entries.Count > 0)
                 {
-                    res.Width  = largest.Width  == 0 ? 256 : largest.Width;
-                    res.Height = largest.Height == 0 ? 256 : largest.Height;
-                    res.BitDepth = largest.BitCount;
+                    var largest = entries.MaxBy(e => (int)e.Width * e.Height + (e.Width == 0 ? 256 * 256 : 0));
+                    if (largest is not null)
+                    {
+                        res.Width  = largest.Width  == 0 ? 256 : largest.Width;
+                        res.Height = largest.Height == 0 ? 256 : largest.Height;
+                        res.BitDepth = largest.BitCount;
+                    }
                 }
                 break;
             }
 
             case ResourceTypes.RT_BITMAP when res.Data.Length >= 16:
             {
-                using var reader = new BinaryReader(new MemoryStream(res.Data));
-                uint headerSize = reader.ReadUInt32();
-                if (headerSize >= 16)
+                try
                 {
-                    res.Width    = reader.ReadInt32();
-                    res.Height   = Math.Abs(reader.ReadInt32());
-                    reader.ReadUInt16();
-                    res.BitDepth = reader.ReadUInt16();
+                    using var reader = new BinaryReader(new MemoryStream(res.Data));
+                    uint headerSize = reader.ReadUInt32();
+                    if (headerSize >= 16)
+                    {
+                        res.Width    = reader.ReadInt32();
+                        res.Height   = Math.Abs(reader.ReadInt32());
+                        reader.ReadUInt16();
+                        res.BitDepth = reader.ReadUInt16();
+                    }
+                }
+                catch
+                {
+                    // Ignore bitmap parsing errors, dimensions remain 0
                 }
                 break;
             }

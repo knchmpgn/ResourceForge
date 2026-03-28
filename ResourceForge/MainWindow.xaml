@@ -115,10 +115,28 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" shell:WindowChrome.IsHitTestVisibleInChrome="True">
-                <Button Width="46" Height="48" Style="{StaticResource ToolbarButton}" Click="MinimizeButton_Click" ToolTip="Minimize">
+                <Button Width="46" Height="48" Click="MinimizeButton_Click" ToolTip="Minimize">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ToolbarButton}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <TextBlock Text="&#xE921;" FontFamily="Segoe Fluent Icons" FontSize="10"/>
                 </Button>
-                <Button Width="46" Height="48" Style="{StaticResource ToolbarButton}" Click="MaximizeButton_Click" ToolTip="Maximize or restore">
+                <Button Width="46" Height="48" Click="MaximizeButton_Click" ToolTip="Maximize or restore">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource ToolbarButton}">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                     <TextBlock Text="&#xE922;" FontFamily="Segoe Fluent Icons" FontSize="10"/>
                 </Button>
                 <Button Width="46" Height="48" Click="CloseButton_Click" ToolTip="Close">
@@ -149,52 +167,52 @@
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                     <Button Style="{StaticResource AccentButton}" Command="{Binding OpenFileCommand}" Padding="14,9" Margin="0,0,8,0" ToolTip="Open a PE binary (Ctrl+O)">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE8B7;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0"/>
-                            <TextBlock Text="Open File" FontWeight="SemiBold"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="&#xE8B7;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Open File" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource ToolbarButton}" Command="{Binding ReloadFileCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Reload current file (F5)">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE72C;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0"/>
-                            <TextBlock Text="Reload"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="&#xE72C;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Reload" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource ToolbarButton}" Command="{Binding CreateBackupCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Create backup">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE74E;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0"/>
-                            <TextBlock Text="Backup"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="&#xE74E;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Backup" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource ToolbarButton}" Command="{Binding ShowBackupsCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="View backups">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE81C;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0"/>
-                            <TextBlock Text="History"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="&#xE81C;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="History" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Rectangle Width="1" Fill="{DynamicResource BorderBrush}" Margin="10,6"/>
                     <Button Style="{StaticResource ToolbarButton}" Command="{Binding ReplaceResourceCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Replace selected resource">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE8AC;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0"/>
-                            <TextBlock Text="Replace"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="&#xE8AC;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Replace" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource ToolbarButton}" Command="{Binding BatchReplaceCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Batch replace icon groups">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE945;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0"/>
-                            <TextBlock Text="Batch"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="&#xE945;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Batch" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource ToolbarButton}" Command="{Binding ExportResourceCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Export selected resource">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE898;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0"/>
-                            <TextBlock Text="Export"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="&#xE898;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Export" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Button Style="{StaticResource ToolbarButton}" Command="{Binding DeleteResourceCommand}" Padding="10,9" ToolTip="Delete selected resource">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="&#xE74D;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0"/>
-                            <TextBlock Text="Delete"/>
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <TextBlock Text="&#xE74D;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                            <TextBlock Text="Delete" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -214,25 +232,9 @@
 
                         <TextBlock Grid.Column="0" Text="&#xE721;" FontFamily="Segoe Fluent Icons" FontSize="13" VerticalAlignment="Center" Foreground="{DynamicResource SecondaryTextBrush}"/>
                         <TextBox x:Name="SearchBox" Grid.Column="1" Margin="8,0,8,0" BorderThickness="0" Background="Transparent" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Search by name, type, or language (Ctrl+F)"/>
-                        <StackPanel Grid.Column="2" Orientation="Horizontal">
-                            <Button Style="{StaticResource ToolbarButton}" Command="{Binding ClearFiltersCommand}" Padding="8,5" Margin="0,0,4,0" ToolTip="Clear filters">
-                                <TextBlock Text="&#xE894;" FontFamily="Segoe Fluent Icons" FontSize="13"/>
-                            </Button>
-                    <Border CornerRadius="8" Background="{DynamicResource SubtleAccentBrush}" Padding="8,5" VerticalAlignment="Center">
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                            <Button Style="{StaticResource ToolbarButton}" Command="{Binding SetGridViewCommand}" Padding="6,2" Margin="0,0,8,0" ToolTip="Grid view">
-                                <TextBlock Text="&#xECA5;" FontFamily="Segoe Fluent Icons" FontSize="13"/>
-                            </Button>
-                            <Button x:Name="ViewToggleButton" Style="{StaticResource ToolbarButton}" Padding="6,2" ToolTip="Toggle list/icon view" Click="ViewToggleButton_Click">
-                                <TextBlock x:Name="ViewToggleIcon" Text="&#xE8EF;" FontFamily="Segoe Fluent Icons" FontSize="13"/>
-                            </Button>
-                            <StackPanel Orientation="Horizontal" Margin="12,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="Size" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,0,6,0"/>
-                                <Slider Width="120" Minimum="48" Maximum="300" Value="{Binding ThumbnailSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-                        </StackPanel>
+                        <Button Grid.Column="2" Style="{StaticResource ToolbarButton}" Command="{Binding ClearFiltersCommand}" Padding="8,5" ToolTip="Clear filters">
+                            <TextBlock Text="&#xE894;" FontFamily="Segoe Fluent Icons" FontSize="13"/>
+                        </Button>
                     </Grid>
                 </Border>
             </Grid>
@@ -250,13 +252,7 @@
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" Background="{DynamicResource SidebarBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,1,0">
                 <DockPanel Margin="12">
-                    <Border DockPanel.Dock="Top" Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12" Padding="14" Margin="0,0,0,10">
-                        <StackPanel>
-                            <TextBlock Text="Categories" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource SecondaryTextBrush}"/>
-                            <TextBlock Text="Jump between resource families and narrow the workspace quickly." Margin="0,6,0,0" FontSize="12" TextWrapping="Wrap" Foreground="{DynamicResource PrimaryTextBrush}"/>
-                        </StackPanel>
-                    </Border>
-                    <ListBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" Background="Transparent" BorderThickness="0" Padding="0" ItemContainerStyle="{StaticResource SidebarListBoxItem}">
+                    <ListBox DockPanel.Dock="Top" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" Background="Transparent" BorderThickness="0" Padding="0" ItemContainerStyle="{StaticResource SidebarListBoxItem}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel LastChildFill="True">
@@ -272,8 +268,12 @@
             <GridSplitter Grid.Column="1" Width="5" Background="Transparent" Cursor="SizeWE"/>
 
             <Grid Grid.Column="2" Margin="12">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <Border Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="16"/>
-                <Grid Margin="12">
+                <Grid Grid.Row="0" Margin="12">
                     <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding HasFile, Converter={StaticResource InvBoolToVis}}">
                         <Border Width="88" Height="88" Background="{DynamicResource HeroBackgroundBrush}" CornerRadius="20">
                             <TextBlock Text="&#xE943;" FontFamily="Segoe Fluent Icons" FontSize="42" Foreground="{DynamicResource AccentBrush}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -301,7 +301,7 @@
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
                     </ScrollViewer>
-                    <DataGrid ItemsSource="{Binding FilteredResources}" SelectedItem="{Binding SelectedResource, Mode=TwoWay}" Visibility="{Binding IsListView, Converter={StaticResource BoolToVis}}" SelectionChanged="ListView_SelectionChanged">
+                    <DataGrid ItemsSource="{Binding FilteredResources}" SelectedItem="{Binding SelectedResource, Mode=TwoWay}" Visibility="{Binding IsListView, Converter={StaticResource BoolToVis}}" SelectionChanged="ListView_SelectionChanged" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" EnableRowVirtualization="True">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="" Width="48" IsReadOnly="True">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -324,6 +324,18 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
+                <Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="12" Margin="0,12,0,0" Visibility="{Binding HasFile, Converter={StaticResource BoolToVis}}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                        <Button Style="{StaticResource ToolbarButton}" Command="{Binding SetGridViewCommand}" Padding="10,8" Margin="0,0,8,0" ToolTip="Grid view">
+                            <TextBlock Text="&#xECA5;" FontFamily="Segoe Fluent Icons" FontSize="14" VerticalAlignment="Center"/>
+                        </Button>
+                        <Button x:Name="ViewToggleButton" Style="{StaticResource ToolbarButton}" Padding="10,8" Margin="0,0,16,0" ToolTip="Toggle list/icon view" Click="ViewToggleButton_Click">
+                            <TextBlock x:Name="ViewToggleIcon" Text="&#xE8EF;" FontFamily="Segoe Fluent Icons" FontSize="14" VerticalAlignment="Center"/>
+                        </Button>
+                        <TextBlock Text="Size" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,0,10,0"/>
+                        <Slider Width="140" Minimum="48" Maximum="300" Value="{Binding ThumbnailSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Border>
             </Grid>
 
             <GridSplitter Grid.Column="3" Width="5" Background="Transparent" Cursor="SizeWE"/>
