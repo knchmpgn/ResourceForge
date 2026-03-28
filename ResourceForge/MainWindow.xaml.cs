@@ -89,6 +89,11 @@ public partial class MainWindow : Window
         }
     }
 
+    private void Slider_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+    {
+        e.Handled = true;
+    }
+
     private void Window_DragOver(object sender, DragEventArgs e)
     {
         e.Effects = e.Data.GetDataPresent(DataFormats.FileDrop)
@@ -124,6 +129,26 @@ public partial class MainWindow : Window
         if (sender is DataGrid grid)
         {
             _vm.SelectResource(grid.SelectedItem as ResourceItemViewModel);
+        }
+    }
+
+    private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+    {
+        var searchBorder = SearchContainer.Parent as Border;
+        if (searchBorder != null)
+        {
+            searchBorder.BorderBrush = (System.Windows.Media.Brush)FindResource("AccentBrush");
+            searchBorder.BorderThickness = new Thickness(2);
+        }
+    }
+
+    private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+    {
+        var searchBorder = SearchContainer.Parent as Border;
+        if (searchBorder != null)
+        {
+            searchBorder.BorderBrush = (System.Windows.Media.Brush)FindResource("BorderBrush");
+            searchBorder.BorderThickness = new Thickness(1);
         }
     }
 }

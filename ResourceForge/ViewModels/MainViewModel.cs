@@ -131,7 +131,7 @@ public sealed partial class MainViewModel : ObservableObject
     public string WindowSubtitle => FileName ?? "No file open";
     public string FilterSummary => BuildFilterSummary();
     public string SelectedResourceSummary => SelectedResource is null
-        ? "Select a resource to inspect details and actions."
+        ? string.Empty
         : $"{SelectedResource.DisplayName}  |  {SelectedResource.TypeLabel}  |  {SelectedResource.DataSize}";
 
     public ObservableCollection<ResourceCategoryFilter> Categories { get; }
@@ -376,6 +376,27 @@ public sealed partial class MainViewModel : ObservableObject
 
     public async Task LoadFileAsync(string path)
     {
+        // Validate file exists and is accessible
+        if (!File.Exists(path))
+        {
+            ShowError("File Not Found", $"The file \"{path}\" does not exist.");
+            return;
+        }
+
+        try
+        {
+            if ((File.GetAttributes(path) & FileAttributes.Directory) == FileAttributes.Directory)
+            {
+                ShowError("Invalid File", "The path points to a directory, not a file.");
+                return;
+            }
+        }
+        catch (Exception ex)
+        {
+            ShowError("Access Error", $"Cannot access the file: {ex.Message}");
+            return;
+        }
+
         await RunBusyAsync($"Loading {Path.GetFileName(path)}...", async () =>
         {
             var items = await Task.Run(() =>
@@ -585,7 +606,19 @@ public sealed partial class MainViewModel : ObservableObject
                 OnPropertyChanged(nameof(FilteredResources));
             }
 
-            ShowError("Error", ex.Message);
+            string errorMessage = ex.Message;
+
+            // Provide more user-friendly error messages for common issues
+            if (ex is UnauthorizedAccessException)
+            {
+                errorMessage = "Access denied. The file may be in use or you don't have permission to access it.";
+            }
+            else if (errorMessage.Contains("Cannot open"))
+            {
+                errorMessage = "Cannot open the file as a PE binary. It may be corrupted, encrypted, or not a valid PE file.";
+            }
+
+            ShowError("Error", errorMessage);
         }
         finally
         {
@@ -599,17 +632,16 @@ public sealed partial class MainViewModel : ObservableObject
     {
         if (!HasFile)
         {
-            return "No file loaded";
+            return string.Empty;
         }
 
         if (!IsFilterActive)
         {
-            return $"{FilteredResourceCount} resources available";
+            return $"{TotalResourceCount} resource{(TotalResourceCount != 1 ? "s" : string.Empty)}";
         }
 
-        string category = SelectedCategory == ResourceCategoryFilter.All ? "All categories" : SelectedCategory.ToString();
-        string search = string.IsNullOrWhiteSpace(SearchText) ? "No search" : $"Search: \"{SearchText.Trim()}\"";
-        return $"{FilteredResourceCount} of {TotalResourceCount} shown  |  {category}  |  {search}";
+        string category = SelectedCategory == ResourceCategoryFilter.All ? "All" : SelectedCategory.ToString();
+        return $"{FilteredResourceCount} of {TotalResourceCount}  •  {category}";
     }
 
     private static bool ResourceMatches(PeResource left, PeResource right) =>

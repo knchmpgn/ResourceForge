@@ -6,6 +6,7 @@
         xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         xmlns:vm="clr-namespace:ResourceForge.ViewModels"
         Title="ResourceForge 2026"
+        Icon="pack://application:,,,/app.ico"
         Width="1380"
         Height="860"
         MinWidth="980"
@@ -61,38 +62,41 @@
                         </Style>
                     </Border.Style>
 
-                    <StackPanel>
-            <Grid Margin="0,0,0,12">
-                            <Border Height="{Binding DataContext.ThumbnailSize, RelativeSource={RelativeSource AncestorType=Window}}" CornerRadius="10" Background="{DynamicResource HeroBackgroundBrush}">
-                                <Border Margin="10" CornerRadius="8" Background="{DynamicResource CheckerBrush}">
-                                    <Grid>
-                                        <Image Source="{Binding Thumbnail}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Visibility="{Binding HasThumbnail, Converter={StaticResource BoolToVis}}" MaxHeight="{Binding DataContext.ThumbnailSize, RelativeSource={RelativeSource AncestorType=Window}}" MaxWidth="{Binding DataContext.ThumbnailSize, RelativeSource={RelativeSource AncestorType=Window}}"/>
-                                        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding HasThumbnail, Converter={StaticResource InvBoolToVis}}">
-                                            <TextBlock Text="{Binding Resource.Category, Converter={StaticResource CatGlyph}}" FontFamily="Segoe Fluent Icons" FontSize="34" HorizontalAlignment="Center" Foreground="{Binding Resource.Category, Converter={StaticResource CatBrush}}"/>
-                                            <TextBlock Text="{Binding CategoryName}" Margin="0,6,0,0" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource SecondaryTextBrush}"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </Border>
-                            </Border>
-                            <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0" Padding="8,4" CornerRadius="999" Background="{Binding Resource.Category, Converter={StaticResource CatBrush}}">
-                                <TextBlock Text="{Binding TypeLabel}" FontSize="10" FontWeight="SemiBold" Foreground="White"/>
-                            </Border>
-                        </Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
-                        <TextBlock Text="{Binding DisplayName}" FontSize="13" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource PrimaryTextBrush}"/>
-                        <TextBlock Text="{Binding SummaryLine}" Margin="0,4,0,0" FontSize="11" TextWrapping="Wrap" Foreground="{DynamicResource SecondaryTextBrush}"/>
-                        <DockPanel Margin="0,10,0,0">
-                            <TextBlock Text="{Binding Dimensions}" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}"/>
-                            <TextBlock DockPanel.Dock="Right" Text="{Binding DataSize}" FontSize="11" Foreground="{DynamicResource SecondaryTextBrush}"/>
-                        </DockPanel>
-                    </StackPanel>
+                        <Border Height="{Binding DataContext.ThumbnailSize, RelativeSource={RelativeSource AncestorType=Window}}" CornerRadius="10,10,0,0" Background="{DynamicResource CheckerBrush}">
+                            <Grid>
+                                <Image Source="{Binding Thumbnail}" Stretch="Uniform" RenderOptions.BitmapScalingMode="NearestNeighbor" SnapsToDevicePixels="True" Visibility="{Binding HasThumbnail, Converter={StaticResource BoolToVis}}" MaxHeight="{Binding DataContext.ThumbnailSize, RelativeSource={RelativeSource AncestorType=Window}}" MaxWidth="{Binding DataContext.ThumbnailSize, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding HasThumbnail, Converter={StaticResource InvBoolToVis}}">
+                                    <TextBlock Text="{Binding Resource.Category, Converter={StaticResource CatGlyph}}" FontFamily="Segoe Fluent Icons" FontSize="34" HorizontalAlignment="Center" Foreground="{Binding Resource.Category, Converter={StaticResource CatBrush}}"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Row="1" Margin="0,0,0,0" Padding="10,8" Background="Transparent">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding DisplayName}" FontSize="12" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource PrimaryTextBrush}"/>
+                                <Border Grid.Column="1" Padding="6,3" CornerRadius="4" Background="{Binding Resource.Category, Converter={StaticResource CatBrush}}" Margin="8,0,0,0">
+                                    <TextBlock Text="{Binding TypeLabel}" FontSize="9" FontWeight="SemiBold" Foreground="White"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
                 </Border>
             </DataTemplate>
         </Grid.Resources>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="48"/>
-            <RowDefinition Height="74"/>
+            <RowDefinition Height="62"/>
             <RowDefinition Height="3"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
@@ -141,13 +145,32 @@
                 </Button>
                 <Button Width="46" Height="48" Click="CloseButton_Click" ToolTip="Close">
                     <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource ToolbarButton}">
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#C42B1C"/>
-                                    <Setter Property="Foreground" Value="White"/>
-                                </Trigger>
-                            </Style.Triggers>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="Root"
+                                                Background="{TemplateBinding Background}"
+                                                CornerRadius="8"
+                                                Padding="{TemplateBinding Padding}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Root" Property="Background" Value="#C42B1C"/>
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="Root" Property="Background" Value="#A02410"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                         </Style>
                     </Button.Style>
                     <TextBlock Text="&#xE8BB;" FontFamily="Segoe Fluent Icons" FontSize="10"/>
@@ -155,61 +178,61 @@
             </StackPanel>
         </Grid>
 
-        <Border Grid.Row="1" Background="{DynamicResource TitleBarBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="16,12">
+        <Border Grid.Row="1" Background="{DynamicResource TitleBarBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,0,0,1" Padding="16,10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="20"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="16"/>
-                    <ColumnDefinition Width="340"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                    <Button Style="{StaticResource AccentButton}" Command="{Binding OpenFileCommand}" Padding="14,9" Margin="0,0,8,0" ToolTip="Open a PE binary (Ctrl+O)">
+                    <Button Style="{StaticResource AccentButton}" Command="{Binding OpenFileCommand}" Padding="14,8" Margin="0,0,8,0" ToolTip="Open a PE binary (Ctrl+O)">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="&#xE8B7;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="Open File" FontWeight="SemiBold" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding ReloadFileCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Reload current file (F5)">
+                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding ReloadFileCommand}" Padding="10,8" Margin="0,0,4,0" ToolTip="Reload current file (F5)">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="&#xE72C;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="Reload" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding CreateBackupCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Create backup">
+                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding CreateBackupCommand}" Padding="10,8" Margin="0,0,4,0" ToolTip="Create backup">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="&#xE74E;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="Backup" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding ShowBackupsCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="View backups">
+                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding ShowBackupsCommand}" Padding="10,8" Margin="0,0,4,0" ToolTip="View backups">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="&#xE81C;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="History" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
                     <Rectangle Width="1" Fill="{DynamicResource BorderBrush}" Margin="10,6"/>
-                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding ReplaceResourceCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Replace selected resource">
+                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding ReplaceResourceCommand}" Padding="10,8" Margin="0,0,4,0" ToolTip="Replace selected resource">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="&#xE8AC;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="Replace" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding BatchReplaceCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Batch replace icon groups">
+                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding BatchReplaceCommand}" Padding="10,8" Margin="0,0,4,0" ToolTip="Batch replace icon groups">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="&#xE945;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="Batch" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding ExportResourceCommand}" Padding="10,9" Margin="0,0,4,0" ToolTip="Export selected resource">
+                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding ExportResourceCommand}" Padding="10,8" Margin="0,0,4,0" ToolTip="Export selected resource">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="&#xE898;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="Export" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
-                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding DeleteResourceCommand}" Padding="10,9" ToolTip="Delete selected resource">
+                    <Button Style="{StaticResource ToolbarButton}" Command="{Binding DeleteResourceCommand}" Padding="10,8" ToolTip="Delete selected resource">
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                             <TextBlock Text="&#xE74D;" FontFamily="Segoe Fluent Icons" FontSize="13" Margin="0,0,6,0" VerticalAlignment="Center"/>
                             <TextBlock Text="Delete" VerticalAlignment="Center"/>
@@ -217,13 +240,16 @@
                     </Button>
                 </StackPanel>
 
-                <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding FilterSummary}" FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryTextBrush}"/>
-                    <TextBlock Text="{Binding SelectedResourceSummary}" Margin="0,4,0,0" FontSize="11" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource SecondaryTextBrush}"/>
-                </StackPanel>
-
-                <Border Grid.Column="4" Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="1" CornerRadius="12" Padding="10,8">
-                    <Grid>
+                <Border Grid.Column="4" Background="{DynamicResource CardBackgroundBrush}" MinWidth="350">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="CornerRadius" Value="12"/>
+                            <Setter Property="Padding" Value="10,8"/>
+                        </Style>
+                    </Border.Style>
+                    <Grid x:Name="SearchContainer">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -231,8 +257,8 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Grid.Column="0" Text="&#xE721;" FontFamily="Segoe Fluent Icons" FontSize="13" VerticalAlignment="Center" Foreground="{DynamicResource SecondaryTextBrush}"/>
-                        <TextBox x:Name="SearchBox" Grid.Column="1" Margin="8,0,8,0" BorderThickness="0" Background="Transparent" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Search by name, type, or language (Ctrl+F)"/>
-                        <Button Grid.Column="2" Style="{StaticResource ToolbarButton}" Command="{Binding ClearFiltersCommand}" Padding="8,5" ToolTip="Clear filters">
+                        <TextBox x:Name="SearchBox" Grid.Column="1" Margin="8,0,8,0" Style="{StaticResource SearchTextBox}" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" ToolTip="Search by name, type, or language (Ctrl+F)" GotFocus="SearchBox_GotFocus" LostFocus="SearchBox_LostFocus"/>
+                        <Button Grid.Column="2" Style="{StaticResource ToolbarButton}" Command="{Binding ClearFiltersCommand}" Padding="6,4" ToolTip="Clear filters">
                             <TextBlock Text="&#xE894;" FontFamily="Segoe Fluent Icons" FontSize="13"/>
                         </Button>
                     </Grid>
@@ -292,7 +318,7 @@
                         <TextBlock Text="{Binding BusyMessage}" FontSize="15" FontWeight="SemiBold" HorizontalAlignment="Center" Foreground="{DynamicResource PrimaryTextBrush}"/>
                         <TextBlock Text="Large binaries can take a moment while resources and previews are scanned." Margin="0,8,0,0" FontSize="12" HorizontalAlignment="Center" TextAlignment="Center" Foreground="{DynamicResource SecondaryTextBrush}"/>
                     </StackPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="4" Visibility="{Binding IsGridView, Converter={StaticResource BoolToVis}}">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="6" Visibility="{Binding IsGridView, Converter={StaticResource BoolToVis}}">
                         <ItemsControl ItemsSource="{Binding FilteredResources}" ItemTemplate="{StaticResource ResourceGridTemplate}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -324,16 +350,54 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                <Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="12" Margin="0,12,0,0" Visibility="{Binding HasFile, Converter={StaticResource BoolToVis}}">
+                <Border Grid.Row="1" Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource BorderBrush}" BorderThickness="0,1,0,0" Padding="12" Margin="0,12,0,0" CornerRadius="12" Visibility="{Binding HasFile, Converter={StaticResource BoolToVis}}">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                        <Button Style="{StaticResource ToolbarButton}" Command="{Binding SetGridViewCommand}" Padding="10,8" Margin="0,0,8,0" ToolTip="Grid view">
-                            <TextBlock Text="&#xECA5;" FontFamily="Segoe Fluent Icons" FontSize="14" VerticalAlignment="Center"/>
-                        </Button>
-                        <Button x:Name="ViewToggleButton" Style="{StaticResource ToolbarButton}" Padding="10,8" Margin="0,0,16,0" ToolTip="Toggle list/icon view" Click="ViewToggleButton_Click">
+                        <Button x:Name="ViewToggleButton" Style="{StaticResource ToolbarButton}" Padding="10,8" Margin="0,0,12,0" ToolTip="Toggle list/icon view" Click="ViewToggleButton_Click">
                             <TextBlock x:Name="ViewToggleIcon" Text="&#xE8EF;" FontFamily="Segoe Fluent Icons" FontSize="14" VerticalAlignment="Center"/>
                         </Button>
-                        <TextBlock Text="Size" FontSize="12" VerticalAlignment="Center" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,0,10,0"/>
-                        <Slider Width="140" Minimum="48" Maximum="300" Value="{Binding ThumbnailSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center"/>
+                        <Rectangle Width="1" Fill="{DynamicResource BorderBrush}" Margin="0,0,12,0"/>
+                        <TextBlock Text="Size" FontSize="11" VerticalAlignment="Center" Foreground="{DynamicResource SecondaryTextBrush}" Margin="0,0,10,0"/>
+                        <Slider x:Name="ThumbnailSlider" Width="160" Minimum="48" Maximum="256" Value="{Binding ThumbnailSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" PreviewMouseWheel="Slider_PreviewMouseWheel" IsSnapToTickEnabled="True" TickPlacement="BottomRight" TickFrequency="16">
+                            <Slider.Style>
+                                <Style TargetType="Slider">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="Slider">
+                                                <Border Background="Transparent" Padding="0,8">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                            <RowDefinition Height="Auto"/>
+                                                        </Grid.RowDefinitions>
+                                                        <TickBar Grid.Row="0" Placement="Top" Height="4" Fill="{DynamicResource BorderBrush}" Ticks="{TemplateBinding Ticks}" Margin="12,0"/>
+                                                        <Track Grid.Row="1" x:Name="PART_Track">
+                                                            <Track.DecreaseRepeatButton>
+                                                                <RepeatButton Style="{StaticResource HorizontalSliderButtonStyle}" Background="{DynamicResource AccentBrush}" Height="4"/>
+                                                            </Track.DecreaseRepeatButton>
+                                                            <Track.IncreaseRepeatButton>
+                                                                <RepeatButton Style="{StaticResource HorizontalSliderButtonStyle}" Background="{DynamicResource BorderBrush}" Height="4"/>
+                                                            </Track.IncreaseRepeatButton>
+                                                            <Track.Thumb>
+                                                                <Thumb Width="3" Height="20">
+                                                                    <Thumb.Template>
+                                                                        <ControlTemplate>
+                                                                            <Border Background="{DynamicResource AccentBrush}" CornerRadius="1.5"/>
+                                                                        </ControlTemplate>
+                                                                    </Thumb.Template>
+                                                                </Thumb>
+                                                            </Track.Thumb>
+                                                        </Track>
+                                                        <TickBar Grid.Row="2" Placement="Bottom" Height="4" Fill="{DynamicResource BorderBrush}" Ticks="{TemplateBinding Ticks}" Margin="12,0"/>
+                                                    </Grid>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Slider.Style>
+                            <Slider.Ticks>48,64,80,96,112,128,144,160,176,192,208,224,240,256</Slider.Ticks>
+                        </Slider>
                     </StackPanel>
                 </Border>
             </Grid>
